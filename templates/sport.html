@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#ffcc00">
+    <title>Άρης - {{ sport|capitalize }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #121212; color: white; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .phone-container { width: 100%; max-width: 400px; background: #1e1e1e; border-radius: 15px; border: 2px solid #ffcc00; overflow: hidden; min-height: 90vh; }
+        .header { background: #ffcc00; color: #000; padding: 15px; font-size: 20px; font-weight: normal; display: flex; align-items: center; }
+        .back-btn { text-decoration: none; color: black; margin-right: 15px; font-weight: normal; }
+        .tabs { display: flex; background: #252525; border-bottom: 2px solid #333; }
+        .tab-btn { flex: 1; padding: 12px; text-align: center; background: none; border: none; color: #aaa; font-weight: normal; cursor: pointer; }
+        .tab-btn.active { color: #ffcc00; border-bottom: 3px solid #ffcc00; background: #2a2a2a; }
+        .tab-content { display: none; padding: 10px 0; }
+        .tab-content.active { display: block; }
+        .card { background: #2a2a2a; border-radius: 8px; margin: 8px 15px; padding: 12px 15px; border-left: 4px solid #ffcc00; }
+        .vs-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+        .vs { font-size: 16px; font-weight: normal; }
+        .score { font-size: 18px; font-weight: normal; color: #ffcc00; background: #1e1e1e; padding: 2px 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<div class="phone-container">
+    <div class="header">
+        <a href="/" class="back-btn">⬅</a> ARIS ZONE - {{ sport|upper }}
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('upcoming')">Επόμενοι</button>
+        <button class="tab-btn" onclick="switchTab('completed')">Αποτελέσματα</button>
+    </div>
+    <div id="upcoming" class="tab-content active">
+        {% for match in upcoming %}
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold;">
+                <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
+                <div style="color: #ffcc00;">{{ match.stadium }}</div>
+            </div>
+            <div class="vs-row"><div class="vs">ΑΡΗΣ vs {{ match.opponent }}</div></div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="completed" class="tab-content">
+        {% for match in completed %}
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold;">
+                <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
+                <div style="color: #ffcc00;">{{ match.stadium }}</div>
+            </div>
+            <div class="vs-row">
+                <div class="vs">ΑΡΗΣ vs {{ match.opponent }}</div>
+                <div class="score">{{ match.scoreA }} - {{ match.scoreB }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#ffcc00">
+    <title>ARIS ZONE</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #121212; color: white; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .phone-container { width: 100%; max-width: 400px; background: #1e1e1e; border-radius: 15px; border: 2px solid #ffcc00; overflow: hidden; min-height: 90vh; }
+        .header { background: #ffcc00; color: #000; padding: 15px; font-size: 20px; font-weight: bold; text-align: center; }
+        .content { padding: 20px; }
+        .section-title { color: #ffcc00; font-size: 16px; font-weight: bold; margin: 15px 0; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .menu-link { background: #2a2a2a; color: white; padding: 20px; text-decoration: none; border-radius: 12px; text-align: center; font-weight: bold; border: 2px solid #333; }
+        .icon { font-size: 30px; display: block; margin-bottom: 5px; }
+        .card { background: #2a2a2a; border-radius: 8px; margin: 0 0 15px 0; padding: 12px 15px; border-left: 4px solid #ffcc00; }
+        .match-info { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold; }
+        .comp-text { color: #ffcc00; }
+        .vs { font-size: 15px; font-weight: normal; margin-top: 5px; }
+    </style>
+</head>
+<body>
+<div class="phone-container">
+    <div class="header">ARIS THESSALONIKIS</div>
+    <div class="content">
+        <div class="section-title">SPORTS</div>
+        <div class="menu-grid">
+            <a href="/sport/football" class="menu-link"><span class="icon">⚽</span>Football</a>
+            <a href="/sport/basketball" class="menu-link"><span class="icon">🏀</span>Basketball</a>
+        </div>
+        <div class="section-title">NEXT MATCHES</div>
+        {% for match in upcoming %}
+        <div class="card">
+            <div class="match-info">
+                <div style="color: #aaa;">
+                    {% if 'football' in match.sport|lower %}⚽{% elif 'basketball' in match.sport|lower %}🏀{% endif %}
+                    {{ match.date_time }} | <span class="comp-text">{{ match.tournament }}</span>
+                </div>
+            </div>
+            <div class="vs">ΑΡΗΣ vs {{ match.away_team }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
