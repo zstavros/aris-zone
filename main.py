@@ -32,7 +32,7 @@ def read_root(request: Request):
     
     for m in all_matches:
         if m.get('status') == 'open':
-            # Ίδια λογική με πριν
+            # Εδώ προσθέτουμε τη λογική για να "βλέπει" το HTML τις μεταβλητές
             country = m.get('country', '')
             team_name = "ΑΡΗΣ" if country == 'gr' else "ARIS"
             
@@ -49,6 +49,7 @@ def read_root(request: Request):
             match_obj = {
                 "date": m.get('date_time'),
                 "competition": m.get('tournament'),
+                "sport": m.get('sport'),
                 "team_name": team_name,
                 "opponent": opponent,
                 "is_home": is_home
