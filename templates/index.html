@@ -36,21 +36,22 @@
         </div>
         <div class="section-title">NEXT MATCHES</div>
         {% for match in upcoming %}
-        <div class="card">
-            <div class="match-info">
-                <div style="color: #aaa;">
-                    {% if 'football' in match.sport|lower %}⚽{% elif 'basketball' in match.sport|lower %}🏀{% endif %}
-                    {{ match.date_time }} | <span class="comp-text">{{ match.tournament }}</span>
-                </div>
-            </div>
-                <div class="vs">
-                    {% if is_home %}
-                        {{ my_team_name }} vs {{ opponent_name }}
-                    {% else %}
-                        {{ opponent_name }} vs {{ my_team_name }}
-                    {% endif %}
-                </div>
+<div class="card">
+    <div class="match-info">
+        <div style="color: #aaa;">
+            {% if 'football' in match.sport|lower %}⚽{% elif 'basketball' in match.sport|lower %}🏀{% endif %}
+            {{ match.date }} | <span class="comp-text">{{ match.competition }}</span>
         </div>
+    </div>
+    <div class="vs">
+        {% if match.is_home %}
+            {{ match.team_name }} vs {{ match.opponent }}
+        {% else %}
+            {{ match.opponent }} vs {{ match.team_name }}
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
         {% endfor %}
     </div>
 </div>
