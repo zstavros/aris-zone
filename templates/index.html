@@ -43,7 +43,13 @@
                     {{ match.date_time }} | <span class="comp-text">{{ match.tournament }}</span>
                 </div>
             </div>
-            <div class="vs">ΑΡΗΣ vs {{ match.away_team }}</div>
+                <div class="vs">
+                    {% if is_home %}
+                        {{ my_team_name }} vs {{ opponent_name }}
+                    {% else %}
+                        {{ opponent_name }} vs {{ my_team_name }}
+                    {% endif %}
+                </div>
         </div>
         {% endfor %}
     </div>
