@@ -41,7 +41,15 @@
                 <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
-            <div class="vs-row"><div class="vs">ΑΡΗΣ vs {{ match.opponent }}</div></div>
+            <div class="vs-row">
+                <div class="vs">
+                    {% if is_home %}
+                        {{ my_team_name }} vs {{ opponent_name }}
+                    {% else %}
+                        {{ opponent_name }} vs {{ my_team_name }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -53,7 +61,13 @@
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
             <div class="vs-row">
-                <div class="vs">ΑΡΗΣ vs {{ match.opponent }}</div>
+                <div class="vs">
+                    {% if is_home %}
+                        {{ my_team_name }} vs {{ opponent_name }}
+                    {% else %}
+                        {{ opponent_name }} vs {{ my_team_name }}
+                    {% endif %}
+                </div>
                 <div class="score">{{ match.scoreA }} - {{ match.scoreB }}</div>
             </div>
         </div>
