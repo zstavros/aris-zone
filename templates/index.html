@@ -28,21 +28,23 @@
 </head>
 <body>
 <div class="phone-container">
-    <div class="header">ARIS THESSALONIKIS</div>
+    <div class="header">ARIS THESSALONIKIS
+    </div>
     <div class="content">
         <div class="menu-grid">
             <a href="/sport/football" class="menu-link"><span class="icon">⚽</span>Football</a>
             <a href="/sport/basketball" class="menu-link"><span class="icon">🏀</span>Basketball</a>
         </div>
-        <div class="section-title">NEXT MATCHES</div>
-        {% for match in upcoming %}
-<div class="card">
-    <div class="match-info">
-        <div style="color: #aaa;">
-            {% if 'football' in match.sport|lower %}⚽{% elif 'basketball' in match.sport|lower %}🏀{% endif %}
-            {{ match.date }} | <span class="comp-text">{{ match.competition }}</span>
+        <div class="section-title">NEXT MATCHES
         </div>
-    </div>
+        {% for match in upcoming %}
+    <div class="card">   
+        <div class="match-info">
+            <div style="color: #aaa;">
+                {% if 'football' in match.sport|lower %}⚽{% elif 'basketball' in match.sport|lower %}🏀{% endif %}
+                {{ match.date }} | <span class="comp-text">{{ match.competition }}</span>
+            </div>
+        </div>
     <div class="vs">
         {% if match.is_home %}
             {{ match.team_name }} vs {{ match.opponent }}
@@ -50,8 +52,7 @@
             {{ match.opponent }} vs {{ match.team_name }}
         {% endif %}
     </div>
-</div>
-{% endfor %}
+    </div>
         {% endfor %}
     </div>
 </div>
