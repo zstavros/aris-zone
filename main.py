@@ -28,7 +28,33 @@ def get_matches():
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
     all_matches = get_matches()
-    upcoming = [m for m in all_matches if m.get('status') == 'open']
+    upcoming = []
+    
+    for m in all_matches:
+        if m.get('status') == 'open':
+            # Ίδια λογική με πριν
+            country = m.get('country', '')
+            team_name = "ΑΡΗΣ" if country == 'gr' else "ARIS"
+            
+            home = m.get('home_team', '')
+            away = m.get('away_team', '')
+            
+            if home == "ARIS":
+                opponent = away
+                is_home = True
+            else:
+                opponent = home
+                is_home = False
+            
+            match_obj = {
+                "date": m.get('date_time'),
+                "competition": m.get('tournament'),
+                "team_name": team_name,
+                "opponent": opponent,
+                "is_home": is_home
+            }
+            upcoming.append(match_obj)
+            
     return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming})
 
 @app.get("/sport/{sport_name}", response_class=HTMLResponse)
