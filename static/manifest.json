@@ -1,0 +1,17 @@
+{
+  "name": "ARIS-Sport",
+  "short_name": "ARIS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#ffcc00",
+  "icons": [
+    {
+      "src": "/static/icon.png?v=2", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+]
+  
+}
