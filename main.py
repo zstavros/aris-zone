@@ -13,7 +13,7 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def get_matches():
-    # Αυτό είναι το σωστό link που έχεις ήδη
+    # Αυτό είναι το σωστό link από το google sheet
     CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFQQ3cyNYfBbQoizYYMUbays86Y-Gji1vPIux28Ds8DbrNZLpQY7BzpEySPHb27ofbMdaq4O15oFDU/pub?output=csv"
     try:
         # Εδώ άλλαξα το 'url' σε 'CSV_URL'
@@ -32,7 +32,6 @@ def read_root(request: Request):
     
     for m in all_matches:
         if m.get('status') == 'open':
-            # Εδώ προσθέτουμε τη λογική για να "βλέπει" το HTML τις μεταβλητές
             country = m.get('country', '')
             team_name = "ΑΡΗΣ" if country == 'gr' else "ARIS"
             
@@ -54,7 +53,7 @@ def read_root(request: Request):
                 "opponent": opponent,
                 "is_home": is_home
             }
-            upcoming.append(match_obj)
+            upcoming = upcoming[:5]
             
     return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming})
 
