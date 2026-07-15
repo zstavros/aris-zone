@@ -39,7 +39,7 @@ def read_root(request: Request):
             home = m.get('home_team', '')
             away = m.get('away_team', '')
             
-            if home == "ARIS":
+            if home == "ARIS" or home == "ΑΡΗΣ":
                 opponent = away
                 is_home = True
             else:
@@ -75,7 +75,7 @@ def read_sport(request: Request, sport_name: str):
         home = m.get('home_team', '')
         away = m.get('away_team', '')
         
-        if home == "ARIS":
+        if home == "ARIS" or home == "ΑΡΗΣ":
             opponent = away
             is_home = True
         else:
