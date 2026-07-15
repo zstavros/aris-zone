@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from datetime import datetime
 
 import uvicorn
 
@@ -90,13 +91,26 @@ def read_sport(request: Request, sport_name: str):
             upcoming.append(match_obj)
         elif status == 'close': 
             completed.append(match_obj)
+
+    # Συνάρτηση για να μετατρέπουμε την ημερομηνία σε αντικείμενο για ταξινόμηση
+    def sort_key(m):
+        try:
+            return datetime.strptime(m['date'], '%d/%m/%y')
+        except:
+            return datetime(1900, 1, 1)
+
+    # Ταξινόμηση:
+    # Στα 'upcoming' θέλουμε το πιο κοντινό στο σήμερα (αύξουσα σειρά)
+    upcoming.sort(key=sort_key)
+    
+    # Στα 'completed' θέλουμε το πιο πρόσφατο (φθίνουσα σειρά)
+    completed.sort(key=sort_key, reverse=True)
         
     return templates.TemplateResponse(request=request, name="sport.html", context={
         "upcoming": upcoming, 
         "completed": completed, 
         "sport": sport_name
-    })
-
-
+    })    
+   
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
