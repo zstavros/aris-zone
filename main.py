@@ -46,12 +46,15 @@ def read_root(request: Request):
                 is_home = False
             
             match_obj = {
-                "date": m.get('date_time'),
+                "date": m.get('date_time'), 
                 "competition": m.get('tournament'),
-                "sport": m.get('sport'),
-                "team_name": team_name,
+                "stadium": m.get('stadium'), 
                 "opponent": opponent,
-                "is_home": is_home
+                "team_name": team_name,
+                "is_home": is_home,
+                "scoreA": m.get('home_score'), 
+                "scoreB": m.get('away_score'),
+                "sport": m.get('sport')
             }
             upcoming.append(match_obj)
     upcoming = upcoming[:5]
