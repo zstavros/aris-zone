@@ -28,6 +28,7 @@ def get_matches():
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
     all_matches = get_matches()
+    # Φιλτράρουμε μόνο για open για την αρχική, όπως ήθελες
     upcoming = []
     
     for m in all_matches:
@@ -38,31 +39,23 @@ def read_root(request: Request):
             home = m.get('home_team', '')
             away = m.get('away_team', '')
             
-            if home == "ARIS" or home == "ΑΡΗΣ":
-                opponent = away
-                is_home = True
-            else:
-                opponent = home
-                is_home = False
+            is_home = (home == "ARIS" or home == "ΑΡΗΣ")
+            opponent = away if is_home else home
             
             match_obj = {
                 "date": m.get('date_time'), 
                 "competition": m.get('tournament'),
-                "stadium": m.get('stadium'), 
-                "opponent": opponent,
                 "team_name": team_name,
+                "opponent": opponent,
                 "is_home": is_home,
-                "scoreA": m.get('home_score'), 
-                "scoreB": m.get('away_score'),
                 "sport": m.get('sport')
             }
             upcoming.append(match_obj)
-    upcoming = upcoming[:5]
-            
-    return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming})
+    
+    # Κρατάμε τα 5 πρώτα μετά το loop
+    return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming[:5]})
 
-@app.get("/sport/{sport_name}", response_class=HTMLResponse)
-@app.get("/sport/{sport_name}", response_class=HTMLResponse)
+@app.get("/sport/{sport_name}", response_class=HTMLResponse) # Σβήσαμε το διπλό
 def read_sport(request: Request, sport_name: str):
     all_matches = get_matches()
     sport_data = [m for m in all_matches if sport_name.lower() in m.get('sport', '').lower()]
@@ -70,42 +63,39 @@ def read_sport(request: Request, sport_name: str):
     completed = []
     
     for m in sport_data:
-        # Λογική για το όνομα της ομάδας
         country = m.get('country', '')
         team_name = "ΑΡΗΣ" if country == 'gr' else "ARIS"
         
-        # Λογική για το ποιος είναι ο αντίπαλος και αν παίζουμε εντός/εκτός
         home = m.get('home_team', '')
         away = m.get('away_team', '')
         
-        if home == "ARIS" or home == "ΑΡΗΣ":
-            opponent = away
-            is_home = True
-        else:
-            opponent = home
-            is_home = False
+        is_home = (home == "ARIS" or home == "ΑΡΗΣ")
+        opponent = away if is_home else home
             
         match_obj = {
             "date": m.get('date_time'), 
             "competition": m.get('tournament'),
             "stadium": m.get('stadium'), 
             "opponent": opponent,
-            "team_name": team_name, # Αυτό το στέλνουμε στο HTML
-            "is_home": is_home,     # Αυτό το στέλνουμε στο HTML
+            "team_name": team_name,
+            "is_home": is_home,
             "scoreA": m.get('home_score'), 
             "scoreB": m.get('away_score'),
             "sport": m.get('sport')
         }
         
-        if m.get('status') == 'open': upcoming.append(match_obj)
-        elif m.get('status') == 'close': completed.append(match_obj)
+        # Χρησιμοποίησε .strip() για να είσαι σίγουρος ότι δεν υπάρχουν κενά
+        status = m.get('status', '').strip().lower()
+        if status == 'open': 
+            upcoming.append(match_obj)
+        elif status == 'close': 
+            completed.append(match_obj)
         
     return templates.TemplateResponse(request=request, name="sport.html", context={
         "upcoming": upcoming, 
         "completed": completed, 
         "sport": sport_name
     })
-
 
 
 if __name__ == "__main__":
