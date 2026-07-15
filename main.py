@@ -53,7 +53,7 @@ def read_root(request: Request):
             upcoming.append(match_obj)
     
     # Κρατάμε τα 5 πρώτα μετά το loop
-    return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming[:5]})
+    return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming[:6]})
 
 @app.get("/sport/{sport_name}", response_class=HTMLResponse) # Σβήσαμε το διπλό
 def read_sport(request: Request, sport_name: str):
