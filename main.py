@@ -53,7 +53,8 @@ def read_root(request: Request):
                 "opponent": opponent,
                 "is_home": is_home
             }
-            upcoming = upcoming[:5]
+            upcoming.append(match_obj)
+    upcoming = upcoming[:5]
             
     return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming})
 
