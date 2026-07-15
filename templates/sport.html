@@ -43,12 +43,15 @@
             </div>
             <div class="vs-row">
                 <div class="vs">
-                    {% if is_home %}
-                        {{ my_team_name }} vs {{ opponent_name }}
+                    {% if match.is_home %}
+                        {{ match.team_name }} vs {{ match.opponent }}
                     {% else %}
-                        {{ opponent_name }} vs {{ my_team_name }}
+                        {{ match.opponent }} vs {{ match.team_name }}
                     {% endif %}
                 </div>
+                {% if match.scoreA %}
+                    <div class="score">{{ match.scoreA }} - {{ match.scoreB }}</div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -62,13 +65,15 @@
             </div>
             <div class="vs-row">
                 <div class="vs">
-                    {% if is_home %}
-                        {{ my_team_name }} vs {{ opponent_name }}
+                    {% if match.is_home %}
+                        {{ match.team_name }} vs {{ match.opponent }}
                     {% else %}
-                        {{ opponent_name }} vs {{ my_team_name }}
+                        {{ match.opponent }} vs {{ match.team_name }}
                     {% endif %}
                 </div>
-                <div class="score">{{ match.scoreA }} - {{ match.scoreB }}</div>
+                {% if match.scoreA %}
+                    <div class="score">{{ match.scoreA }} - {{ match.scoreB }}</div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
