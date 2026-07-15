@@ -37,7 +37,7 @@
     <div id="upcoming" class="tab-content active">
         {% for match in upcoming %}
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
                 <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
@@ -59,7 +59,7 @@
     <div id="completed" class="tab-content">
         {% for match in completed %}
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
                 <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
