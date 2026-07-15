@@ -19,7 +19,7 @@
     .tab-content.active { display: block; }
     .card { background: #2a2a2a; border-radius: 8px; margin: 8px 15px; padding: 12px 15px; border-left: 4px solid #ffcc00; }
     /* Μεγαλώσαμε το font-size της ημερομηνίας/διοργάνωσης/γηπέδου από 11px σε 12px */
-    .match-meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; }
+    .match-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold; }
     .vs-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
     .vs { font-size: 16px; font-weight: normal; }
     .score { font-size: 18px; font-weight: normal; color: #ffcc00; background: #1e1e1e; padding: 2px 8px; border-radius: 4px; }
@@ -37,7 +37,7 @@
     <div id="upcoming" class="tab-content active">
         {% for match in upcoming %}
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold;">
                 <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
@@ -59,7 +59,7 @@
     <div id="completed" class="tab-content">
         {% for match in completed %}
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold;">
                 <div style="color: #aaa;">{{ match.date }} | <span style="color: #ffcc00;">{{ match.competition }}</span></div>
                 <div style="color: #ffcc00;">{{ match.stadium }}</div>
             </div>
