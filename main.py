@@ -13,6 +13,13 @@ templates = Jinja2Templates(directory="templates")
 # Μετά το app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+def sort_key(m):
+    try:
+        # Αν οι ημερομηνίες σου είναι π.χ. 17/07/26, αυτό είναι το σωστό format:
+        return datetime.strptime(m['date'], '%d/%m/%y')
+    except:
+        return datetime(1900, 1, 1)
+
 def get_matches():
     # Αυτό είναι το σωστό link από το google sheet
     CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFQQ3cyNYfBbQoizYYMUbays86Y-Gji1vPIux28Ds8DbrNZLpQY7BzpEySPHb27ofbMdaq4O15oFDU/pub?output=csv"
@@ -52,6 +59,7 @@ def read_root(request: Request):
                 "sport": m.get('sport')
             }
             upcoming.append(match_obj)
+            upcoming.sort(key=sort_key) 
     
     # Κρατάμε τα 5 πρώτα μετά το loop
     return templates.TemplateResponse(request=request, name="index.html", context={"upcoming": upcoming[:6]})
@@ -92,14 +100,7 @@ def read_sport(request: Request, sport_name: str):
         elif status == 'close': 
             completed.append(match_obj)
 
-    # Συνάρτηση για να μετατρέπουμε την ημερομηνία σε αντικείμενο για ταξινόμηση
-    def sort_key(m):
-        try:
-            return datetime.strptime(m['date'], '%d/%m/%y')
-        except:
-            return datetime(1900, 1, 1)
-
-    # Ταξινόμηση:
+     # Ταξινόμηση:
     # Στα 'upcoming' θέλουμε το πιο κοντινό στο σήμερα (αύξουσα σειρά)
     upcoming.sort(key=sort_key)
     
