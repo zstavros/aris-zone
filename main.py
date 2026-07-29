@@ -12,13 +12,16 @@ templates = Jinja2Templates(directory="templates")
 
 # Μετά το app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 def sort_key(m):
     try:
-        # Αν οι ημερομηνίες σου είναι π.χ. 17/07/26, αυτό είναι το σωστό format:
-        return datetime.strptime(m['date'], '%d/%m/%y')
+        # Αν η ημερομηνία περιέχει και ώρα (π.χ. "17/07/26 18:30")
+        return datetime.strptime(m['date'], '%d/%m/%y %H:%M')
     except:
-        return datetime(1900, 1, 1)
+        try:
+            # Ασφαλής δικλείδα: Αν κάποια καταχώρηση έχει ΜΟΝΟ ημερομηνία χωρίς ώρα (π.χ. "17/07/26")
+            return datetime.strptime(m['date'], '%d/%m/%y')
+        except:
+            return datetime(1900, 1, 1)
 
 def get_matches():
     # Αυτό είναι το σωστό link από το google sheet
